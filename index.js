@@ -12,9 +12,11 @@ async function fetchWeatherData() {
     if (!response.ok) {
         throw new Error("Failed to Fetch the data");
         }
+        
         const data = await response.json();
+        console.log(data);
 
-        const cityAddress = data.timezone;
+        const cityAddress = data.resolvedAddress;
 
         const cityTemperature = data.currentConditions.temp;
         
