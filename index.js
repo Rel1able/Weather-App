@@ -5,6 +5,8 @@ const wind = document.getElementById("wind");
 const precipitations = document.getElementById("precipitations");
 const weatherData = document.querySelector(".weather-data");
 
+const weatherIcon = document.querySelector(".weather-icon");
+
 async function fetchWeatherData() {
     try {
         const cityName = document.getElementById("cityName").value.toLowerCase();
@@ -16,6 +18,7 @@ async function fetchWeatherData() {
         const data = await response.json();
         console.log(data);
 
+
         const cityAddress = data.resolvedAddress;
 
         const cityTemperature = data.currentConditions.temp;
@@ -26,8 +29,10 @@ async function fetchWeatherData() {
 
         const probabilityOfPrecipitation = data.currentConditions.precipprob;
 
+        const iconPath = data.currentConditions.icon;
+        console.log(iconPath);
 
-        setConditions(cityAddress, cityTemperature, cityHumidity, windSpeed, probabilityOfPrecipitation);
+        setConditions(cityAddress, cityTemperature, cityHumidity, windSpeed, probabilityOfPrecipitation, iconPath);
 
 
     }
@@ -49,12 +54,13 @@ form.addEventListener("submit", (e) => {
 })
 
 
-function setConditions(cityAddress, cityTemperature, cityHumidity, cityWind, cityPrecipitations) {
+function setConditions(cityAddress, cityTemperature, cityHumidity, cityWind, cityPrecipitations, weatherIconPath) {
     address.textContent = cityAddress;
     temperature.textContent = `Temperature: ${Math.round(convertToCelsius(cityTemperature))} °C`;
     humidity.textContent = `Humidity: ${cityHumidity} %`;
     wind.textContent = `Wind Speed: ${cityWind} km/h`;
     precipitations.textContent = `Precipitations: ${cityPrecipitations} %`;
+    weatherIcon.src = `weather-icons/${weatherIconPath}.svg`;
     weatherData.style.display = "flex";
 }
 
